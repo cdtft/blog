@@ -26,15 +26,7 @@ idea可以直接在插件库搜索到这个插件.
 ### 配置文件约定
 
 - 配置文件全部使用`yml`格式
-- 所有自定义配置全部以`primus`开头
-- 所有的自定义配置都使用`@ConfigurationProperties`做`spring-boot`原生集成
-示例代码:`com.biz.primus.ms.base.config.JedisConfiguration.RedisProperties`
-- ~~注意区分不可刷新配置和可刷新配置,在制定属性namespace时就考虑将两者分开~~
-- 每个`spring-cloud`应用只能包含一个`bootstrap.yml`配置文件,该文件中只能写`config-server`和`application-name`相关配置
-- ~~其他配置文件必须以`{applicationName}-{profile}.yml`的形式放在/config-repo目录下~~
-- 本地环境的配置以`application-dev.yml`的命名放置在资源文件夹,该文件是被`.gitignore`忽略的,可以任意修改不必提交.
-- 远程环境的配置以`{applicationName}-{profile}.yml`的形式放在/config-repo目录下
-
+- 
 
 
 ### PO设计原则
@@ -44,24 +36,29 @@ idea可以直接在插件库搜索到这个插件.
 所有强关联必须转换为相应的id引用.例如:
 ```java
 //假设有这样的po
-public class Order{
+public class Article {
+    
 	@ManyToOne
 	private User user;
 	//其他属性
 }
 public class User{
+    
 	@OneToMany(mappedBy="user")
-	private List<Order> orders;
+	private List<Article> articleList;
 	//其他属性
 }
 ```
 这样的代码必须修改为
 ```java
-public class Order{
-	private Long memberId;
+public class Article {
+	
+    private Long userId;
 	//其他属性
 }
-public class User{
+public class User {
+    
+    private Long id;
 	//其他属性
 }
 ```

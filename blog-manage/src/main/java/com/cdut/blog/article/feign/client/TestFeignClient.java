@@ -1,6 +1,6 @@
-package com.cdut.blog.feign.client;
+package com.cdut.blog.article.feign.client;
 
-import com.cdut.blog.feign.Hystrix.TestFeignClientHystrix;
+import com.cdut.blog.article.feign.Hystrix.TestFeignClientHystrix;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

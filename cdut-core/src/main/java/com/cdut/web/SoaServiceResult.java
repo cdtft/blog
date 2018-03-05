@@ -1,5 +1,7 @@
 package com.cdut.web;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 
 /**
@@ -29,7 +31,10 @@ public class SoaServiceResult<T> implements Serializable {
      */
     private T data;
 
-
+    /**
+     *返回异常
+     */
+    @JsonIgnore
     private Exception e;
 
     public static <T> SoaServiceResult<T> buildSuccess() {
@@ -60,5 +65,13 @@ public class SoaServiceResult<T> implements Serializable {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public Exception getE() {
+        return e;
+    }
+
+    public void setE(Exception e) {
+        this.e = e;
     }
 }

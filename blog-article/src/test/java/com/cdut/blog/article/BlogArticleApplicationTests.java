@@ -1,4 +1,4 @@
-package com.cdut.blog;
+package com.cdut.blog.article;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class BlogEurekaServiceApplicationTests {
+public class BlogArticleApplicationTests {
 
 	@Test
 	public void contextLoads() {

@@ -1,6 +1,6 @@
-package com.cdut.blog.controller.test;
+package com.cdut.blog.article.controller.test;
 
-import com.cdut.blog.feign.client.TestFeignClient;
+import com.cdut.blog.article.feign.client.TestFeignClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

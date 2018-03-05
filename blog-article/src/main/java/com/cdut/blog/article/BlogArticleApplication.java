@@ -1,4 +1,4 @@
-package com.cdut.blog;
+package com.cdut.blog.article;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,17 +12,17 @@ import org.springframework.context.annotation.ComponentScan;
 /**
  * @author wangcheng
  */
-@SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableHystrix
 @EnableHystrixDashboard
 @EnableEurekaClient
 @ComponentScan(value = "com.cdut")
-public class BlogManageApplication {
+@SpringBootApplication
+public class BlogArticleApplication {
 
 	public static void main(String[] args) {
 
-		SpringApplication.run(BlogManageApplication.class, args);
+		SpringApplication.run(BlogArticleApplication.class, args);
 	}
 }

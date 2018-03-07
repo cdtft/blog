@@ -1,6 +1,6 @@
-package com.cdut.blog.article.feign.Hystrix;
+package com.cdut.blog.manage.feign.Hystrix;
 
-import com.cdut.blog.article.feign.client.TestFeignClient;
+import com.cdut.blog.manage.feign.client.TestFeignClient;
 import org.springframework.stereotype.Component;
 
 /**

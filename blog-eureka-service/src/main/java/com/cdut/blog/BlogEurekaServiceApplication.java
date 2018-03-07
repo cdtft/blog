@@ -1,4 +1,4 @@
-package com.cdut.blog.article;
+package com.cdut.blog;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

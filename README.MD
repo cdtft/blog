@@ -22,11 +22,11 @@ idea可以直接在插件库搜索到这个插件.
 
 - 以cdut开头的模块为基础支持模块
 - 以blog开头的模块为微服务模块，blog-manage为后台管理模块，blog-eureka-service为服务注册中心
-
+- 以业务模块来区别包例如：com.cdut.blog.`manage`.vo为manage模块vo对象包, 
+com.cdut.blog.`article`.vo文章模块vo对象包
 ### 配置文件约定
 
-- 配置文件全部使用`yml`格式
-- 
+- 配置文件全部使用`yml`格式 
 
 
 ### PO设计原则

@@ -68,6 +68,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.cdut</groupId>
+			<artifactId>cdut-jpa-support</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>

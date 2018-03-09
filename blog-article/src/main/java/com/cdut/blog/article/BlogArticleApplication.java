@@ -17,7 +17,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableHystrix
 @EnableHystrixDashboard
 @EnableEurekaClient
-@ComponentScan(value = "com.cdut")
+@ComponentScan(value = "com.cdut.blog.article")
 @SpringBootApplication
 public class BlogArticleApplication {
 

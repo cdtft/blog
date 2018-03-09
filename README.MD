@@ -4,7 +4,7 @@
 
 ### 关于项目
 
-本工程基于JDK1.8进行开发,使用IDEA作为IDE,management-*使用tomcat8.0以上容器运行
+本工程基于JDK1.8进行开发,使用IDEA作为IDE,采用SpringCloud构架再起项目前先启动BlogEurekaService注册中心
 
 ### 关于lombok
 

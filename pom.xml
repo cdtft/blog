@@ -28,6 +28,7 @@
         <module>cdut-mq-support</module>
         <module>cdut-search-support</module>
         <module>cdut-jpa-support</module>
+        <module>cdut-mybatis-support</module>
     </modules>
 
     <properties>

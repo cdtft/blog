@@ -1,5 +1,6 @@
 package com.cdut.blog.manage;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -18,7 +19,8 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableHystrix
 @EnableHystrixDashboard
 @EnableEurekaClient
-@ComponentScan(value = "com.cdut")
+@ComponentScan(value = "com.cdut.blog.manage")
+@MapperScan(value = "com.cdut.blog")
 public class BlogManageApplication {
 
 	public static void main(String[] args) {

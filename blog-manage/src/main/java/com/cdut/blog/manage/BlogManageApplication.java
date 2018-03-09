@@ -20,7 +20,6 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableHystrixDashboard
 @EnableEurekaClient
 @ComponentScan(value = "com.cdut.blog.manage")
-@MapperScan(value = "com.cdut.blog")
 public class BlogManageApplication {
 
 	public static void main(String[] args) {

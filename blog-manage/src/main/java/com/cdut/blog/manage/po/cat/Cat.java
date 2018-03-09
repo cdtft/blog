@@ -13,7 +13,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CatPO extends BaseEntity {
+public class Cat extends BaseEntity {
 
     private String name;
 

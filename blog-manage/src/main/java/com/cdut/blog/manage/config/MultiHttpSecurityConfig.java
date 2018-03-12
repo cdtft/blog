@@ -1,5 +1,6 @@
 package com.cdut.blog.manage.config;
 
+import com.cdut.blog.manage.service.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -7,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * @author : wangcheng
@@ -16,25 +18,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class MultiHttpSecurityConfig {
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("user").password("password").roles("USER").and()
-                .withUser("admin").password("password").roles("USER", "ADMIN");
-    }
-
     /**
      * rest 接口权限验证
      */
     @Configuration
     @Order(1)
     public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
+
+        @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .antMatcher("/api/**")
                     .authorizeRequests()
-                    .anyRequest().hasRole("ADMIN")
+                    .anyRequest().permitAll()
                     .and()
                     .httpBasic();
         }
@@ -45,6 +41,14 @@ public class MultiHttpSecurityConfig {
      */
     @Configuration
     public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
+
+        @Autowired
+        private UserServiceImpl userServiceImpl;
+
+        @Override
+        public void configure(AuthenticationManagerBuilder auth) throws Exception {
+            auth.userDetailsService(userServiceImpl);
+        }
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {

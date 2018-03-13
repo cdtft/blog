@@ -4,6 +4,7 @@ import com.cdut.blog.manage.service.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,12 +27,18 @@ public class MultiHttpSecurityConfig {
     public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
         @Override
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            auth.authenticationProvider();
+        }
+
+        @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http
-                    .antMatcher("/api/**")
-                    .authorizeRequests()
+            http.authorizeRequests()
+                    .antMatchers( HttpMethod.POST, "/api/login").permitAll()
+                    .antMatchers("/api/v1/**").authenticated()
                     .anyRequest().permitAll()
                     .and()
+                    .addFilterAfter()
                     .httpBasic();
         }
     }

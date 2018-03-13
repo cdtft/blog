@@ -1,10 +1,12 @@
 package com.cdut.blog.manage.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * @author : wangcheng
@@ -17,20 +19,38 @@ public class BlogTokenAuthenticationService {
 
     private static final String SECURITY = "cdut_blog";
 
-    private static final String HEADER_STRING = "Authorization";
+    public static final String HEADER_STRING = "Authorization";
+
+    public static final String KEY_USERNAME = "username";
+
+    public static final String KEY_ROLE = "role";
 
     /**
-     * 授权
-     * @param response resp
-     * @param username 用户名
+     * @param detail 详细信息map
+     * @return
      */
-    public static void addAuthentication(HttpServletResponse response, String username) {
-        String jwt = Jwts.builder()
-                .setSubject(username)
+    public static String generateJwtToken(Map<String,Object> detail) {
+        return Jwts.builder()
+                .setClaims(detail)
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECURITY)
                 .compact();
-        response.addHeader(HEADER_STRING, jwt);
     }
+
+    public static Claims parseUserDetailFormToken(String token) {
+        Claims claims;
+        try {
+            claims = Jwts.parser()
+                    .setSigningKey(SECURITY)
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+
+            return null;
+        }
+        return claims;
+    }
+
+
 
 }

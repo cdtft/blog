@@ -2,24 +2,21 @@ package com.cdut.blog.manage.service.user;
 
 import com.cdut.blog.manage.po.user.User;
 import com.cdut.blog.manage.repository.user.UserRepository;
-import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * @author : wangcheng
  * @description :
  * @date : Created in 17:20 2018/3/12
  */
-@Service
+@Service("userService")
 public class UserServiceImpl implements UserDetailsService {
 
     @Autowired

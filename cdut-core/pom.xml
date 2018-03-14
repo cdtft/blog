@@ -13,8 +13,9 @@
 	</properties>
 
 	<modelVersion>4.0.0</modelVersion>
-
+	<groupId>com.cdut.core</groupId>
 	<artifactId>cdut-core</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>cdut-core</name>
@@ -25,6 +26,31 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- 使用log4j2 日志，需要引进 disruptor ，并且排除系统自带的日志系统 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+
+		<!-- log4j2异步日志需要加载disruptor-3.0.0.jar或者更高的版本 -->
+		<dependency>
+			<groupId>com.lmax</groupId>
+			<artifactId>disruptor</artifactId>
+			<version>3.4.1</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.apache.commons</groupId>

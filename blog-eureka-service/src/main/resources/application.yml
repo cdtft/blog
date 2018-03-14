@@ -4,7 +4,8 @@ server:
 spring:
   application:
     name: blog-eureka-service
-
+  profiles:
+    active: dev
 
 eureka:
   instance:
@@ -14,3 +15,7 @@ eureka:
     fetch-registry: false
     service-url:
       defaultZone: http://127.0.0.1:9001/eureka/
+      
+#log4j2
+logging:
+  config: classpath:log4j2-dev.xml

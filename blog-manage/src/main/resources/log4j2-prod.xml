@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<configuration>  
+    
+    <properties>  
+        <!--定义变量-->
+		<property name="APP_NAME">blog-manage</property>
+		<property name="LOG_HOME">/data/logs/blog-manage</property>
+		<property name="PATTERN_LOG_SOCKET">%d{yyyy-MM-dd'T'HH:mm:ss.SSSZZ} ${APP_NAME} %p %m%n</property>
+    </properties> 
+    
+     <appenders>
+        <console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${PATTERN_LOG_SOCKET}"/>
+        </console>
+        
+        <RollingFile name="RollingFileAll" fileName="${LOG_HOME}/all.log"
+                     filePattern="${LOG_HOME}/all-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${PATTERN_LOG_SOCKET}"/>
+			<Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="100000"/>
+        </RollingFile>
+    </appenders>
+
+    <loggers>
+        <!--过滤掉spring的一些无用的debug信息-->
+        <logger name="org.springframework" level="INFO">
+        </logger>
+        <AsyncRoot level="INFO">
+            <AppenderRef ref="RollingFileAll"/>
+        </AsyncRoot>
+    </loggers> 
+  
+</configuration>  

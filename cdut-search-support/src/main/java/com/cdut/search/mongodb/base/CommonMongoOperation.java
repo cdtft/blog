@@ -65,8 +65,8 @@ public class CommonMongoOperation<T> {
      * @param entityClass
      *            实体类
      */
-    public void save(Class<T> entityClass) {
-        template.save(entityClass);
+    public void save(Object object) {
+        template.save(object);
     }
 
     /**
@@ -75,8 +75,8 @@ public class CommonMongoOperation<T> {
      * @param entityClass
      *            实体类
      */
-    public void delete(Class<T> entityClass) {
-        template.remove(entityClass);
+    public void delete(Object object) {
+        template.remove(object);
     }
 
     /**

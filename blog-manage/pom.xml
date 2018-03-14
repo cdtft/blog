@@ -78,6 +78,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+            <groupId>com.cdut.core</groupId>
+            <artifactId>cdut-core</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        
 	</dependencies>
 
 	<dependencyManagement>

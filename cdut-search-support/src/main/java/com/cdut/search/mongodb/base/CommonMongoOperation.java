@@ -2,28 +2,23 @@ package com.cdut.search.mongodb.base;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.stereotype.Service;
 
 /**
  * MongoDB基本操作类.
  * 
  * @author : Zilean
  * @date : 2018-03-13 15:44
- * @param <T>
  */
-@Service
-public class CommonMongoOperation<T> {
-
-    @Autowired
-    private MongoTemplate template;
+public class CommonMongoOperation {
 
     /**
      * 通过集合的某个 key 查找到为value的记录.
      * 
+     * @param template
+     *            MongoTemplate
      * @param key
      *            集合 key
      * @param value
@@ -32,7 +27,7 @@ public class CommonMongoOperation<T> {
      *            MongoDB集合对应的 Bean 类
      * @return 查找到的记录
      */
-    public List<T> find(String key, Object value, Class<T> entityClass) {
+    public static List<?> find(MongoTemplate template, String key, Object value, Class<?> entityClass) {
         Criteria criteria = Criteria.where(key).is(value);
         Query query = new Query(criteria);
         return template.find(query, entityClass);
@@ -41,6 +36,8 @@ public class CommonMongoOperation<T> {
     /**
      * 通过集合的某个 key 查找到为value的记录,分页获取值.
      * 
+     * @param template
+     *            MongoTemplate
      * @param key
      *            集合 key
      * @param value
@@ -53,7 +50,8 @@ public class CommonMongoOperation<T> {
      *            每页大小
      * @return 查找到的记录
      */
-    public List<T> find(String key, Object value, Class<T> entityClass, int pageNo, int pageSize) {
+    public static List<?> find(MongoTemplate template, String key, Object value, Class<?> entityClass, int pageNo,
+            int pageSize) {
         Criteria criteria = Criteria.where(key).is(value);
         Query query = new Query(criteria);
         return template.find(query.skip(pageNo * pageSize).limit(pageSize), entityClass);
@@ -62,26 +60,32 @@ public class CommonMongoOperation<T> {
     /**
      * 保存一条记录.
      * 
+     * @param template
+     *            MongoTemplate
      * @param entityClass
      *            实体类
      */
-    public void save(Object object) {
+    public static void save(MongoTemplate template, Object object) {
         template.save(object);
     }
 
     /**
-     * 删除某条记录.
+     * 删除某条记录，以这种方式删除的时候，该记录应该已知 id.
      * 
+     * @param template
+     *            MongoTemplate
      * @param entityClass
      *            实体类
      */
-    public void delete(Object object) {
+    public static void delete(MongoTemplate template, Object object) {
         template.remove(object);
     }
 
     /**
      * 删除符合某个 key-value 组合的所有记录.
      * 
+     * @param template
+     *            MongoTemplate
      * @param key
      *            集合 key
      * @param value
@@ -89,7 +93,7 @@ public class CommonMongoOperation<T> {
      * @param entityClass
      *            实体类
      */
-    public void delete(String key, Object value, Class<T> entityClass) {
+    public static void delete(MongoTemplate template, String key, Object value, Class<?> entityClass) {
         Criteria criteria = Criteria.where(key).is(value);
         Query query = new Query(criteria);
         template.remove(query, entityClass);

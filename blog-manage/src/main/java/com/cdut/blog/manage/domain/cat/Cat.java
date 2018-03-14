@@ -1,4 +1,4 @@
-package com.cdut.blog.manage.po.cat;
+package com.cdut.blog.manage.domain.cat;
 
 import com.cdut.mybaits.BaseEntity;
 import lombok.Getter;

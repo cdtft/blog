@@ -1,6 +1,5 @@
 package com.cdut.blog.manage.filter;
 
-import com.cdut.blog.manage.po.user.User;
 import com.cdut.blog.manage.security.BlogTokenAuthenticationService;
 import io.jsonwebtoken.Claims;
 import org.apache.commons.lang3.StringUtils;
@@ -13,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
-import springfox.documentation.spi.service.contexts.SecurityContext;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;

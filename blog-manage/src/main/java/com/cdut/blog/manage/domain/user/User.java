@@ -1,4 +1,4 @@
-package com.cdut.blog.manage.po.user;
+package com.cdut.blog.manage.domain.user;
 
 import com.cdut.myenum.CommonStatusEnum;
 import com.google.common.collect.Sets;

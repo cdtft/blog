@@ -1,6 +1,6 @@
 package com.cdut.blog.manage.filter;
 
-import com.cdut.blog.manage.po.user.User;
+import com.cdut.blog.manage.domain.user.User;
 import com.cdut.blog.manage.security.BlogTokenAuthenticationService;
 import com.cdut.blog.manage.vo.user.Account;
 import com.fasterxml.jackson.databind.ObjectMapper;

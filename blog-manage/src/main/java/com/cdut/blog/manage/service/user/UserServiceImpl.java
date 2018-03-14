@@ -1,6 +1,6 @@
 package com.cdut.blog.manage.service.user;
 
-import com.cdut.blog.manage.po.user.User;
+import com.cdut.blog.manage.domain.user.User;
 import com.cdut.blog.manage.repository.user.UserRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

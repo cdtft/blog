@@ -1,6 +1,6 @@
 package com.cdut.blog.manage.repository.user;
 
-import com.cdut.blog.manage.po.user.User;
+import com.cdut.blog.manage.domain.user.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

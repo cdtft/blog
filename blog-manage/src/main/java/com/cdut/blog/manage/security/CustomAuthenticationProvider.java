@@ -1,8 +1,21 @@
 package com.cdut.blog.manage.security;
 
+import com.cdut.blog.manage.po.user.User;
+import com.google.common.collect.Sets;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author : wangcheng
@@ -12,13 +25,31 @@ import org.springframework.security.core.AuthenticationException;
  */
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
+    private UserDetailsService userDetailsService;
+
+    public CustomAuthenticationProvider(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        return null;
+        String username = authentication.getName();
+        String password = authentication.getCredentials().toString();
+        UserDetails loginUser = userDetailsService.loadUserByUsername(username);
+        if (Objects.nonNull(loginUser)) {
+            //TODO 加密
+            if (password.equals(loginUser.getPassword())) {
+                return new UsernamePasswordAuthenticationToken(loginUser, password, loginUser.getAuthorities());
+            } else {
+                throw new BadCredentialsException("密码错误");
+            }
+        } else {
+            throw new UsernameNotFoundException("未找到用户");
+        }
     }
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return false;
+        return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 }

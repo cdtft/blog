@@ -29,9 +29,11 @@ import java.util.Map;
 @Component
 public class JwtTokenAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-
-    @Autowired
     private AuthenticationManager authenticationManager;
+
+    public JwtTokenAuthenticationFilter(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+    }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -60,5 +62,11 @@ public class JwtTokenAuthenticationFilter extends UsernamePasswordAuthentication
         //claims.put(BlogTokenAuthenticationService.KEY_ROLE, )
         String token = BlogTokenAuthenticationService.generateJwtToken(claims);
         response.addHeader(BlogTokenAuthenticationService.HEADER_STRING, token);
+    }
+
+    @Override
+    @Autowired
+    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+        super.setAuthenticationManager(authenticationManager);
     }
 }

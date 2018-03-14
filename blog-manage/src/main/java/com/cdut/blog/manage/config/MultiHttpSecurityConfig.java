@@ -1,7 +1,12 @@
 package com.cdut.blog.manage.config;
 
+import com.cdut.blog.manage.filter.JwtTokenAuthenticationFilter;
+import com.cdut.blog.manage.filter.RestAuthenticationFilter;
+import com.cdut.blog.manage.security.CustomAuthenticationProvider;
 import com.cdut.blog.manage.service.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
@@ -26,9 +31,16 @@ public class MultiHttpSecurityConfig {
     @Order(1)
     public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
+        @Autowired
+        @Qualifier("userService")
+        private UserDetailsService userDetailsService;
+
+        @Autowired
+        private RestAuthenticationFilter restAuthenticationFilter;
+
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.authenticationProvider();
+            auth.authenticationProvider(new CustomAuthenticationProvider(userDetailsService));
         }
 
         @Override
@@ -38,9 +50,16 @@ public class MultiHttpSecurityConfig {
                     .antMatchers("/api/v1/**").authenticated()
                     .anyRequest().permitAll()
                     .and()
-                    .addFilterAfter()
+                    .addFilter(jwtTokenAuthenticationFilter())
+                    .addFilter(restAuthenticationFilter)
                     .httpBasic();
         }
+
+        @Bean
+        private JwtTokenAuthenticationFilter jwtTokenAuthenticationFilter() throws Exception {
+            return new JwtTokenAuthenticationFilter(super.authenticationManager());
+        }
+
     }
 
     /**
@@ -50,11 +69,12 @@ public class MultiHttpSecurityConfig {
     public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
         @Autowired
-        private UserServiceImpl userServiceImpl;
+        @Qualifier("userService")
+        private UserDetailsService userDetailsService;
 
         @Override
         public void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.userDetailsService(userServiceImpl);
+            auth.userDetailsService(userDetailsService);
         }
 
         @Override

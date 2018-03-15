@@ -1,6 +1,5 @@
 package com.cdut.blog;
 
-import com.cdut.blog.search.mongodb.base.CommonMongoOperation;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.cdut.blog.article.BlogArticleApplication;
 import com.cdut.blog.article.domain.Article;
+import com.cdut.blog.search.mongodb.base.CommonMongoOperation;
 
 import lombok.extern.log4j.Log4j2;
 

@@ -1,4 +1,4 @@
-package com.cdut.blog.article.mongo.config;
+package com.cdut.blog.article.config.mongo;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;

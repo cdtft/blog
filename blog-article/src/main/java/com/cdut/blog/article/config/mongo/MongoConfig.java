@@ -1,4 +1,4 @@
-package com.cdut.blog.article.mongo.config;
+package com.cdut.blog.article.config.mongo;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

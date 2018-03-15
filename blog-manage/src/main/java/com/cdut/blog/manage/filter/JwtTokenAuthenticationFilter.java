@@ -36,12 +36,17 @@ public class JwtTokenAuthenticationFilter extends UsernamePasswordAuthentication
     }
 
     @Override
+    public void setFilterProcessesUrl(String filterProcessesUrl) {
+        super.setFilterProcessesUrl(filterProcessesUrl);
+    }
+
+    @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             Account account = new ObjectMapper().readValue(request.getInputStream(), Account.class);
             return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     account.getUsername(),
-                    account.getUsername(),
+                    account.getPassword(),
                     Lists.newArrayList()
             ));
 

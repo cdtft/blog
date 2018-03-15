@@ -11,10 +11,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * @author : wangcheng
@@ -29,6 +31,7 @@ public class MultiHttpSecurityConfig {
      */
     @Configuration
     @Order(1)
+    @EnableGlobalMethodSecurity(prePostEnabled = true)
     public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
         @Autowired
@@ -45,19 +48,23 @@ public class MultiHttpSecurityConfig {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests()
-                    .antMatchers( HttpMethod.POST, "/api/login").permitAll()
-                    .antMatchers("/api/v1/**").authenticated()
-                    .anyRequest().permitAll()
+            http
+                    .csrf().disable()
+                    .antMatcher("/api/**")
+                    .authorizeRequests()
+                    .antMatchers(HttpMethod.POST, "/api/").permitAll()
+                    .anyRequest().authenticated()
                     .and()
-                    .addFilter(jwtTokenAuthenticationFilter())
                     .addFilter(restAuthenticationFilter)
+                    .addFilterBefore(jwtTokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                     .httpBasic();
         }
 
         @Bean
-        private JwtTokenAuthenticationFilter jwtTokenAuthenticationFilter() throws Exception {
-            return new JwtTokenAuthenticationFilter(super.authenticationManager());
+        public JwtTokenAuthenticationFilter jwtTokenAuthenticationFilter() throws Exception {
+            JwtTokenAuthenticationFilter filter = new JwtTokenAuthenticationFilter(super.authenticationManager());
+            filter.setFilterProcessesUrl("/api/login");
+            return filter;
         }
 
     }
@@ -66,6 +73,7 @@ public class MultiHttpSecurityConfig {
      * 后台管理系统接口验证
      */
     @Configuration
+    @EnableGlobalMethodSecurity(prePostEnabled = true)
     public static class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
         @Autowired
@@ -80,6 +88,7 @@ public class MultiHttpSecurityConfig {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
+                    .csrf().disable()
                     .authorizeRequests()
                     .anyRequest().authenticated()
                     .and()

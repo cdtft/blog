@@ -39,11 +39,11 @@ public class RestAuthenticationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String token = request.getHeader(BlogTokenAuthenticationService.HEADER_STRING);
-        if (StringUtils.isBlank(token)) {
-            chain.doFilter(request, response);
+        if (StringUtils.isNotBlank(token)) {
+            UsernamePasswordAuthenticationToken authenticationToken = getAuthenticationToken(token);
+            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
-        UsernamePasswordAuthenticationToken authenticationToken = getAuthenticationToken(token);
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        chain.doFilter(request, response);
     }
 
     private UsernamePasswordAuthenticationToken getAuthenticationToken(String token) {

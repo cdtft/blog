@@ -45,6 +45,3 @@ mybatis:
   type-aliases-package: com.cdut.blog.manage.po
   config-location: classpath:mybatis-config.xml
   
-#log4j2
-logging:
-  config: classpath:log4j2-dev.xml

@@ -28,12 +28,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
-        String password = authentication.getCredentials().toString();
+        String credentials = authentication.getCredentials().toString();
         UserDetails loginUser = userDetailsService.loadUserByUsername(username);
         if (Objects.nonNull(loginUser)) {
             //TODO 加密
-            if (password.equals(loginUser.getPassword())) {
-                return new UsernamePasswordAuthenticationToken(loginUser, password, loginUser.getAuthorities());
+            if (credentials.equals(loginUser.getPassword())) {
+                return new UsernamePasswordAuthenticationToken(loginUser, credentials, loginUser.getAuthorities());
             } else {
                 throw new BadCredentialsException("密码错误");
             }

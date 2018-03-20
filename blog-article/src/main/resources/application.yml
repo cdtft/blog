@@ -4,9 +4,26 @@ server:
 spring:
   application:
     name: blog-article
-
+  data:
+    mongodb:
+      first:
+        host: 10.9.44.13
+      second:
+        host: 10.9.44.13
+      port: 27017
+      timeout: 30000
+      cdut:
+        database: chiq
+        username: chiq
+        password: 123456
+  profiles:
+    active: dev
 
 eureka:
   client:
     service-url:
       defaultZone: http://127.0.0.1:9001/eureka/
+
+#log4j2
+logging:
+  config: classpath:log4j2-dev.xml

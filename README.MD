@@ -4,7 +4,7 @@
 
 ### 关于项目
 
-本工程基于JDK1.8进行开发,使用IDEA作为IDE,management-*使用tomcat8.0以上容器运行
+本工程基于JDK1.8进行开发,使用IDEA作为IDE,采用SpringCloud构架再起项目前先启动BlogEurekaService注册中心
 
 ### 关于lombok
 
@@ -22,11 +22,11 @@ idea可以直接在插件库搜索到这个插件.
 
 - 以cdut开头的模块为基础支持模块
 - 以blog开头的模块为微服务模块，blog-manage为后台管理模块，blog-eureka-service为服务注册中心
-
+- 以业务模块来区别包例如：com.cdut.blog.`manage`.vo为manage模块vo对象包, 
+com.cdut.blog.`article`.vo文章模块vo对象包
 ### 配置文件约定
 
-- 配置文件全部使用`yml`格式
-- 
+- 配置文件全部使用`yml`格式 
 
 
 ### PO设计原则
@@ -62,10 +62,16 @@ public class User {
 	//其他属性
 }
 ```
+###模块设计概要
+
+####1.article
+
+#####1.1表设计
+| 字段名称 | 数据类型 | 长度 | 描述 |  
+| ---- | --- | --- | --- | 
+| id | bigint | 8 | 主键 |
 
 
 
 
 
-
-.

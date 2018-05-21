@@ -4,8 +4,10 @@ import com.cdut.blog.manage.domain.user.User;
 import com.cdut.blog.manage.security.BlogTokenAuthenticationService;
 import com.cdut.blog.manage.vo.user.Account;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,18 +44,11 @@ public class JwtTokenAuthenticationFilter extends UsernamePasswordAuthentication
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        try {
-            Account account = new ObjectMapper().readValue(request.getInputStream(), Account.class);
-            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    account.getUsername(),
-                    account.getPassword(),
-                    Lists.newArrayList()
-            ));
-
-        } catch (IOException e) {
-            throw new RuntimeException("账户授权解析失败！");
-        }
-
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        Preconditions.checkArgument(StringUtils.isNotBlank(username));
+        Preconditions.checkArgument(StringUtils.isNotBlank(password));
+        return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password, Lists.newArrayList()));
     }
 
 

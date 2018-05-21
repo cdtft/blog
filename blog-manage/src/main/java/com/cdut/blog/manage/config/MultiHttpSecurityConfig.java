@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -50,13 +51,16 @@ public class MultiHttpSecurityConfig {
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .csrf().disable()
+
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .and()
                     .antMatcher("/api/**")
                     .authorizeRequests()
-                    .antMatchers(HttpMethod.POST, "/api/").permitAll()
+                    .antMatchers(HttpMethod.POST, "/api/login").permitAll()
                     .anyRequest().authenticated()
                     .and()
-                    .addFilter(restAuthenticationFilter)
                     .addFilterBefore(jwtTokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                    .addFilter(restAuthenticationFilter)
                     .httpBasic();
         }
 

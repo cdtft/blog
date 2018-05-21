@@ -28,6 +28,8 @@ import java.util.Objects;
 @Component
 public class RestAuthenticationFilter extends BasicAuthenticationFilter {
 
+    private static final String QUERY_FIELD = "username";
+
     @Autowired
     @Qualifier("userService")
     private UserDetailsService userDetailsService;
@@ -39,22 +41,19 @@ public class RestAuthenticationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String token = request.getHeader(BlogTokenAuthenticationService.HEADER_STRING);
-        if (StringUtils.isNotBlank(token)) {
-            UsernamePasswordAuthenticationToken authenticationToken = getAuthenticationToken(token);
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-        }
+        UsernamePasswordAuthenticationToken authenticationToken = getAuthenticationToken(token);
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         chain.doFilter(request, response);
     }
 
     private UsernamePasswordAuthenticationToken getAuthenticationToken(String token) {
         Claims claims = BlogTokenAuthenticationService.parseUserDetailFormToken(token);
-        UserDetails loginUser = userDetailsService.loadUserByUsername((String) claims.get("username"));
-        if  (Objects.nonNull(loginUser)) {
-            return new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
-
+        if (Objects.nonNull(claims)) {
+            UserDetails loginUser = userDetailsService.loadUserByUsername((String) claims.get(QUERY_FIELD));
+            if  (Objects.nonNull(loginUser)) {
+                return new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
+            }
         }
         return null;
     }
-
-
 }

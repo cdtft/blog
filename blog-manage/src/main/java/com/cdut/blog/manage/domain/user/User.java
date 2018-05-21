@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;
 import java.util.Set;
@@ -75,11 +76,11 @@ public class User implements UserDetails {
 
         Set<GrantedAuthority> grantedAuthoritySet = Sets.newHashSet();
 
-
-        this.authenticationStr.forEach(str -> {
-            grantedAuthoritySet.add(new SimpleGrantedAuthority(str));
-        });
-
+        if (!CollectionUtils.isEmpty(this.authenticationStr)) {
+            this.authenticationStr.forEach(str -> {
+                grantedAuthoritySet.add(new SimpleGrantedAuthority(str));
+            });
+        }
         return grantedAuthoritySet;
     }
 

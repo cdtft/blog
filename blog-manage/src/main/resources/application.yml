@@ -33,6 +33,11 @@ spring:
       wall:
         config:
           multi-statement-allow: true
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+      cluster-nodes: 39.107.121.97:9300
 
 
 eureka:

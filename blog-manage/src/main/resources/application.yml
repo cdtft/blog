@@ -38,6 +38,7 @@ spring:
       repositories:
         enabled: true
       cluster-nodes: 39.107.121.97:9300
+      cluster-name: es
 
 
 eureka:
@@ -49,4 +50,4 @@ mybatis:
   mapper-locations: classpath:/**/*Mapper.xml
   type-aliases-package: com.cdut.blog.manage.po
   config-location: classpath:mybatis-config.xml
-  
+
